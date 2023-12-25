@@ -1,4 +1,4 @@
-# Sophos Firewall Go Client 
+# Sophos Firewall Go Client
 
 ## Overview
 
@@ -20,6 +20,5 @@ Construct a new Sophos Firewall client, then use the various services on the cli
 access different parts of the Sophos Firewall API. For example:
 
 ```go
-client := sophosfirewall.NewClient(nil, "https://192.0.2.1:4444", "admin", "password")
+client := sophosfirewall.New("admin", "password", "https://firewall.example.com:4444/webconsole/APIController")
 ```
-
