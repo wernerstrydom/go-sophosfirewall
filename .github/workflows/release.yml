@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+    contents: write
+
+jobs:
+    release:
+        name: Release
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+        - uses: actions/setup-go@v5
+          with:
+            go-version-file: 'go.mod'
+            cache: true
+
+        - name: Import GPG key
+          uses: crazy-max/ghaction-import-gpg@v6
+          id: import_gpg
+          with:
+            gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+            passphrase: ${{ secrets.PASSPHRASE }}
+
+        - name: Cleanup Modules
+          run: go mod tidy
+
+        - name: Build
+          run: go build -v ./...
+
+        - name: Test
+          run: go test -v ./...
+
+    list:
+      name: List
+      runs-on: ubuntu-latest
+      steps:
+        - name: List
+          run: GOPROXY=proxy.golang.org go list -m github.com/${{ github.repository }}@${{ github.ref_name }}
