@@ -1,3 +1,3 @@
 module github.com/wernerstrydom/go-sophosfirewall
 
-go 1.21
+go 1.18
