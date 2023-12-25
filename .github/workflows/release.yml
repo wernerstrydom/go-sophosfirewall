@@ -38,6 +38,7 @@ jobs:
           run: go test -v ./...
 
     list:
+      needs: release
       name: List
       runs-on: ubuntu-latest
       steps:
